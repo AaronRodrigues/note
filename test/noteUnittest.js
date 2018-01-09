@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const chai = require('chai');
 const expect = chai.expect;
 
+var Note = require('../app/models/note_model.js')
 const testSchema = new Schema({
   name: { type: String, required: true }
 });
@@ -27,13 +28,13 @@ describe('Database Tests', function() {
   describe('Test Database', function() {
     //Save object with 'name' value of 'Mike"
     it('New name saved to test database', function(done) {
-      var testName = Name({
-        name: 'Mike'
+      var testName =Note({
+        title: 'Mike'
       });
  
       testName.save(done);
     });
-    it('Dont save incorrect format to database', function(done) {
+    it('Doesnt save incorrect format to database', function(done) {
       //Attempt to save with wrong info. An error should trigger
       var wrongSave = Name({
         notName: 'Not Mike'
@@ -45,7 +46,7 @@ describe('Database Tests', function() {
     });
     it('Should retrieve data from test database', function(done) {
       //Look up the 'Mike' object previously saved.
-      Name.find({name: 'Mike'}, (err, name) => {
+      Note.find({title: 'Mike'}, (err, name) => {
         if(err) {throw err;}
         if(name.length === 0) {throw new Error('No data!');}
         done();
